@@ -1,0 +1,66 @@
+# macOS
+.DS_Store
+
+# IDEs
+.idea/
+
+# Compilación
+bin/
+obj/
+out/
+# Archivos generados por el compilador
+*.dll
+*.exe
+*.pdb
+*.cache
+*.log
+*.tmp
+
+# Archivos de configuración de usuario
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Archivos del entorno JetBrains Rider / IntelliJ
+.idea/
+*.iml
+
+# Configuración de VS Code (opcional)
+.vscode/
+
+# Archivos de publicación
+*.publish.xml
+*.dbmdl
+
+# Archivos de base de datos locales
+*.mdf
+*.ldf
+
+# Configuración del entorno de desarrollo (mantener solo si es necesaria)
+appsettings.Development.json
+
+# Paquetes NuGet generados automáticamente
+*.nupkg
+*.snupkg
+
+# Backup de configuraciones
+*.bak
+
+# Archivos de EF Core generados temporalmente
+Migrations/DesignTime*
+
+# Rider
+*.nuget.*
+*.csproj.FileListAbsolute.txt
+*.pdb
+*.dll
+*.cache
+*.json
+*.sourcelink.json
+*.editorconfig
+*.targets
+*.props
+*.AssemblyInfo.cs
+*.Up2Date
+*.genruntimeconfig.cache
