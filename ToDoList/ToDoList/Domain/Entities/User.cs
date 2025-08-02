@@ -15,4 +15,6 @@ public class User
     public string Email { get; set; }
     [Column("password")]
     public string Password { get; set; }
+    
+    public ICollection<Token> Tokens { get; set; } = new List<Token>();
 }
