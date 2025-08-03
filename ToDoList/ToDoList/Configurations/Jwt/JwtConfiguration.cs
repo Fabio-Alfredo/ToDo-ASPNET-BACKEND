@@ -21,8 +21,11 @@ public static class JwtConfiguration
                 options.TokenValidationParameters = new TokenValidationParameters
                 {
                     ValidateLifetime = true,
-                    ValidateIssuerSigningKey = true, 
+                    ValidateIssuerSigningKey = true,
+                    ValidateIssuer = false,
+                    ValidateAudience = false,
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings?.SecretKey))
+                    
                 };
             });
         service.AddAuthorization();
