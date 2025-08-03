@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using ToDoList;
 using ToDoList.Configurations;
 using ToDoList.Data;
+using ToDoList.Middlewares;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -26,9 +27,9 @@ var app = builder.Build();
 //     app.UseSwagger();
 //     app.UseSwaggerUI();
 // }
-
 app.UseAuthentication();
 app.UseAuthorization();
+app.UseMiddleware<AuthMiddleware>();
 app.UseHttpsRedirection();
 app.MapControllers();
 
