@@ -1,3 +1,4 @@
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Security.Cryptography.X509Certificates;
 
@@ -6,6 +7,7 @@ namespace ToDoList.Domain.Entities;
 [Table("tokens")]
 public class Token
 {
+    [Key]
     public Guid Id { get; set; }
     public string Data { get; set; }
     public DateTime Expiration { get; set; }
