@@ -3,6 +3,7 @@ using ToDoList.Domain.Entities;
 using ToDoList.Repositories.impl;
 using ToDoList.Services.Contract;
 using ToDoList.Utils;
+using ToDoList.Utils.Exceptions;
 
 namespace ToDoList.Services.Impl;
 
@@ -25,7 +26,7 @@ public class UserServiceImpl:IUserService
             var user = await userRepository.FindByEmail(userDto.Email);
             if (user != null)
             {
-                throw new Exception("User with this email already exists.");
+                throw new HttpException(StatusCodes.Status409Conflict, "User with this email already exists.");
             }
             user = new User
             {
@@ -39,7 +40,7 @@ public class UserServiceImpl:IUserService
         }
         catch (Exception e)
         {
-            throw new Exception("An error occurred while registering the user.", e);
+            throw e;
         }
     }
 
@@ -70,7 +71,7 @@ public class UserServiceImpl:IUserService
             var user = await userRepository.FindByEmail(email);
             if (user == null)
             {
-                throw new Exception("Email invalid");
+                throw new HttpException(StatusCodes.Status404NotFound, "User not found.");
             }
 
             return user;
