@@ -4,8 +4,8 @@ namespace ToDoList.Repositories.impl;
 
 public interface IUserRepository
 {
-    User Save(User user);
-    User? FindById(Guid id);
-    User? FindByEmail(string email);
-    List<User> FindAll();
+    Task<User> Save(User user);
+    Task<User?> FindById(Guid id);
+    Task<User?> FindByEmail(string email);
+    Task<List<User>> FindAll();
 }

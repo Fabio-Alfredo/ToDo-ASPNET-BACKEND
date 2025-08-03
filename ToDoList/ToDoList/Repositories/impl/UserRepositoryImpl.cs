@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore;
 using ToDoList.Data;
 using ToDoList.Domain.Entities;
 
@@ -12,27 +13,28 @@ public class UserRepositoryImpl:IUserRepository
         this.appDbContext = appDbContext;
     }
     
-    public User Save(User user)
-    {
-        appDbContext.Users.Add(user);
-        appDbContext.SaveChanges();
-        return user;
-    }
+        public async Task<User> Save(User user)
+        {
+            appDbContext.Users.Add(user);
+             await appDbContext.SaveChangesAsync();
+            return user;
+        }
 
-    public User? FindById(Guid id)
-    {
-        var user = appDbContext.Users.Find(id);
-        return user ?? null;
-    }
+        public async Task<User?> FindById(Guid id)
+        {
+            var user = await appDbContext.Users.FindAsync(id);
+            return user ?? null;
+        }
 
-    public User? FindByEmail(string email)
-    {
-        var user = appDbContext.Users.FirstOrDefault(e => e.Email == email);
-        return user ?? null;
-    }
+        public async Task<User?> FindByEmail(string email)
+        {
+            
+            var user = await appDbContext.Users.FirstOrDefaultAsync(e => e.Email == email);
+            return user ?? null;
+        }
 
-    public List<User> FindAll()
+    public async Task<List<User>> FindAll()
     {
-        return appDbContext.Users.ToList();
+        return await appDbContext.Users.ToListAsync();
     }
 }
