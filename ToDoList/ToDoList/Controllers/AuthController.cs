@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ToDoList.Domain.Dtos;
 using ToDoList.Services.Contract;
+using ToDoList.Utils.Exceptions;
 
 namespace ToDoList.Controllers;
 
@@ -18,31 +19,33 @@ public class AuthController:ControllerBase
 
     [HttpPost("register")]
     [AllowAnonymous]
-    public async  Task<ActionResult> RegisterUser([FromBody]RegisterUserDto userDto)
+    public async Task<IActionResult>  RegisterUser([FromBody]RegisterUserDto userDto)
     {
+
         try
         {
-             await userService.RegisterUser(userDto);
-            return Ok(new { Message = "User registered successfully." });
+            await userService.RegisterUser(userDto);
+            return GeneralResponse.GetResponse(StatusCodes.Status201Created, "User registered successfully.");
         }
-        catch (Exception e)
+        catch (HttpException e)
         {
-            return BadRequest(new { Error = e.Message });
+            return GeneralResponse.GetResponse(e.StatusCode, e.Message);
         }
+       
     }
     
     [HttpPost("login")]
     [AllowAnonymous]
-    public async Task<ActionResult> LoginUser([FromBody]LoginUserDto userDto)
+    public async Task<IActionResult> LoginUser([FromBody]LoginUserDto userDto)
     {
         try
         {
             var token = await userService.LoginUser(userDto);
-            return Ok(new { Message = "User logged in successfully.", Token = token.Data });
+            return GeneralResponse.GetResponse(StatusCodes.Status200OK, "Login successful.", token.Data);
         }
-        catch (Exception e)
+        catch (HttpException e)
         {
-            return BadRequest(new { Error = e.Message });
+            return GeneralResponse.GetResponse(e.StatusCode, e.Message);
         }
     }
 }
