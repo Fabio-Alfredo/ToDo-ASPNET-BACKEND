@@ -62,4 +62,21 @@ public class UserServiceImpl:IUserService
             throw new Exception("An error occurred while logging in the user.", e);
         }
     }
+
+    public async Task<User> GetUserByEmail(string email)
+    {
+        try
+        {
+            var user = await userRepository.FindByEmail(email);
+            if (user == null)
+            {
+                throw new Exception("Email invalid");
+            }
+
+            return user;
+        }catch (Exception e)
+        {
+            throw new Exception("An error occurred while retrieving the user by email.", e);
+        }
+    }
 }
