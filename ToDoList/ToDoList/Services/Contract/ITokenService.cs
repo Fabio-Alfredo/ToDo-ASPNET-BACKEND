@@ -1,6 +1,10 @@
+using ToDoList.Domain.Entities;
+
 namespace ToDoList.Services.Contract;
 
-public class ITokenService
+public interface ITokenService
 {
-    
+    void CleanToken(User user);
+    Task<Token> RegisterToken(User user);
+    Task<bool> IsValidToken(User user, string token);
 }

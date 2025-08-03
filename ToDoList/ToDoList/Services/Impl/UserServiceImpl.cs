@@ -10,19 +10,19 @@ public class UserServiceImpl:IUserService
 {
 
     private readonly IUserRepository userRepository;
-    private readonly JwtTools jwtTools;
+    private readonly ITokenService tokenService;
     
-    public UserServiceImpl(IUserRepository userRepository, JwtTools jwtTools)
+    public UserServiceImpl(IUserRepository userRepository, ITokenService tokenService)
     {
         this.userRepository = userRepository;
-        this.jwtTools = jwtTools;
+        this.tokenService = tokenService;
     }
     
-    public void RegisterUser(RegisterUserDto userDto)
+    public async Task RegisterUser(RegisterUserDto userDto)
     {
         try
         {
-            var user = userRepository.FindByEmail(userDto.Email);
+            var user = await userRepository.FindByEmail(userDto.Email);
             if (user != null)
             {
                 throw new Exception("User with this email already exists.");
@@ -35,7 +35,7 @@ public class UserServiceImpl:IUserService
                 Password = BCrypt.Net.BCrypt.HashPassword(userDto.Password)
             };
             
-            userRepository.Save(user);
+            await userRepository.Save(user);
         }
         catch (Exception e)
         {
@@ -43,17 +43,20 @@ public class UserServiceImpl:IUserService
         }
     }
 
-    public string LoginUser(LoginUserDto userDto)
+    public async Task<Token> LoginUser(LoginUserDto userDto)
     {
         try
         {
-            var user = userRepository.FindByEmail(userDto.Email);
+            
+            var user = await userRepository.FindByEmail(userDto.Email);
+            
             if( user == null || !BCrypt.Net.BCrypt.Verify(userDto.Password, user.Password))
             {
                 throw new Exception("Invalid credentials.");
             }
-
-            return jwtTools.GenerateToken(user);
+           
+            var token = await tokenService.RegisterToken(user);
+            return token;
         }catch (Exception e)
         {
             throw new Exception("An error occurred while logging in the user.", e);

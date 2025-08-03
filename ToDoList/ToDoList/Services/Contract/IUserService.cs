@@ -1,9 +1,10 @@
 using ToDoList.Domain.Dtos;
+using ToDoList.Domain.Entities;
 
 namespace ToDoList.Services.Contract;
 
 public interface IUserService
 {
-    void RegisterUser(RegisterUserDto userDto);
-    string LoginUser(LoginUserDto userDto);
+    Task RegisterUser(RegisterUserDto userDto);
+    Task<Token> LoginUser(LoginUserDto userDto);
 }
