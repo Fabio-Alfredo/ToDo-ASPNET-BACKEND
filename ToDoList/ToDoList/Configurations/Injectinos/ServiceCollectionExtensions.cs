@@ -10,12 +10,14 @@ public static class ServiceCollectionExtensions
     public static IServiceCollection AddRepositories(this IServiceCollection service)
     {
         service.AddScoped<IUserRepository, UserRepositoryImpl>();
+        service.AddScoped<ITokenRepository, TokenRepositoryImpl>();
         return service;
     }
 
     public static IServiceCollection AddServices(this IServiceCollection service)
     {
         service.AddScoped<IUserService, UserServiceImpl>();
+        service.AddScoped<ITokenService, TokenServiceImpl>();
         return service;
     }
     
