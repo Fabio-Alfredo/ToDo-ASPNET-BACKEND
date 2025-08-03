@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Security.Cryptography.X509Certificates;
 
 namespace ToDoList.Domain.Entities;
 
@@ -12,6 +13,18 @@ public class Token
     
     [ForeignKey("user_id")]
     public User User { get; set; }
+
+    public Token(User user, string data)
+    {
+        Id = Guid.NewGuid();
+        User = user;
+        Data = data;
+        Expiration = DateTime.UtcNow.AddDays(7); 
+        CanActivate = true;
+    }
     
+    public Token()
+    {
+    }
     
 }
